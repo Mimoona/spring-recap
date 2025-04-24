@@ -27,10 +27,13 @@ public class TodoService {
         return todoRepo.findAll();
     }
 
-    public Todo getTodoById(String id){
+    public Todo getTodoById(String id) throws TodoNotFoundException,  IllegalArgumentException{
+        if (id == null || id.isBlank()) {
+            throw new IllegalArgumentException("Todo Id must not be empty");
+        }
         return todoRepo.findById(id)
-                .orElseThrow(() -> new ResponseStatusException(
-                HttpStatus.NOT_FOUND, "Todo with id " + id + " not found"
+                .orElseThrow(() -> new TodoNotFoundException(
+                 "Todo with id " + id + " not found"
         ));
     }
 
