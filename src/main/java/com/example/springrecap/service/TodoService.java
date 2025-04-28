@@ -38,23 +38,42 @@ public class TodoService {
     }
 
     public Todo createTodo(TodoDto todoDto) {
-        Todo todo= new Todo(idService.generateId(), todoDto.description(), todoDto.status());
-        return todoRepo.save(todo);
+        Todo todo= new Todo(
+                idService.generateId(),
+                todoDto.description(),
+                todoDto.status());
+        todoRepo.save(todo);
+        return todo;
     }
 
-    public Todo updateTodo(String id, TodoDto todoDto){
+    public Todo updateTodo(Todo todo) throws TodoNotFoundException{
 
-        Todo existingTodo = todoRepo.findById(id)
-                .orElseThrow(() -> new ResponseStatusException(
-                HttpStatus.NOT_FOUND, "Todo with id " + id + " not found"
-        ));
-        todoRepo.save(existingTodo);
-        return existingTodo;
+        if(todoRepo.existsById(todo.id())){
+            todoRepo.save(todo);
+            return todo;
+        } else {
+            throw new TodoNotFoundException("Todo with id"+ todo.id()+ "not found");
+        }
     }
 
-    public void deleteTodo(String id){
+
+//    public Todo updateTodo(String id, TodoDto todoDto){
+//
+//        if(todoRepo.existsById(id)){
+//            todoRepo.save(todoDto);
+//            return todoDto;
+//        } else {
+//            throw new TodoNotFoundException("Todo with id"+ id+ "not found");
+//
+//        }
+//
+//    }
+
+    public void deleteTodo(String id) throws TodoNotFoundException{
         if (todoRepo.existsById(id)){
             todoRepo.deleteById(id);
+        } else {
+            throw new TodoNotFoundException("Todo with id " + id + "not found");
         }
     }
 }

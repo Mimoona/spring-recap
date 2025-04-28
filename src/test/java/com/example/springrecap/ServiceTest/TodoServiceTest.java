@@ -76,6 +76,54 @@ public class TodoServiceTest {
 
     }
 
+    @Test
+    void createTodo_shouldReturnTodo_whenCalledWithValidTodoId() {
+        //Given
+        TodoService todoService = new TodoService(mockRepo, mockIdService);
+        Todo expected = new Todo("1", "description", Status.OPEN);
+        TodoDto todoDto = new TodoDto("description", Status.OPEN);
+        Mockito.when(mockIdService.generateId()).thenReturn("1");
 
+        //WHEN
+        Todo actual = todoService.createTodo(todoDto);
+
+        //THEN
+        assertEquals(expected, actual);
+        Mockito.verify(mockRepo).save(expected);
+    }
+
+
+    @Test
+    void deleteTodo_shouldThrowException_whenCalledWithInvalidId() throws TodoNotFoundException {
+        //GIVEN
+        TodoService TodoService = new TodoService(mockRepo, mockIdService);
+
+        Mockito.when(mockRepo.existsById("1")).thenReturn(false);
+        //WHEN
+
+        try {
+            TodoService.deleteTodo("1");
+            fail();
+        }catch (TodoNotFoundException e){
+            assertTrue(true);
+        }
+//
+
+
+    }
+
+    @Test
+    void deleteTodo_shouldDeleteItemFromDB_whenCalledWithInvalidId() throws TodoNotFoundException{
+        //GIVEN
+        TodoService TodoService = new TodoService(mockRepo, mockIdService);
+
+        Mockito.when(mockRepo.existsById("1")).thenReturn(true);
+        //WHEN
+
+        TodoService.deleteTodo("1");
+        // THEN
+        Mockito.verify(mockRepo).deleteById("1");
+
+    }
 
 }
