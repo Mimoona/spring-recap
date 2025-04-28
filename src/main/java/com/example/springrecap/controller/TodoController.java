@@ -1,7 +1,7 @@
 package com.example.springrecap.controller;
 
 import com.example.springrecap.dto.TodoDto;
-import com.example.springrecap.exceptions.TodoNotFoundException;
+import com.example.springrecap.exception.TodoNotFoundException;
 import com.example.springrecap.model.Todo;
 import com.example.springrecap.service.TodoService;
 import org.springframework.web.bind.annotation.*;
@@ -25,7 +25,7 @@ public class TodoController {
     }
 
     @GetMapping("/{id}")
-    public Todo getTodoById(@PathVariable String id) throws TodoNotFoundException {
+    public Todo getTodoById(@PathVariable String id) throws TodoNotFoundException{
         return todoService.getTodoById(id);
     }
 

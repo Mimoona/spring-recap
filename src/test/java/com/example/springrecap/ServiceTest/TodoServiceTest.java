@@ -1,7 +1,7 @@
 package com.example.springrecap.ServiceTest;
 
 import com.example.springrecap.dto.TodoDto;
-import com.example.springrecap.exceptions.TodoNotFoundException;
+import com.example.springrecap.exception.TodoNotFoundException;
 import com.example.springrecap.model.Todo;
 import com.example.springrecap.repository.TodoRepo;
 import com.example.springrecap.service.IdService;
