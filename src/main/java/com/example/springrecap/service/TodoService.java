@@ -24,11 +24,11 @@ public class TodoService {
     }
 
     public Todo getTodoById(String id) throws TodoNotFoundException {
-        return todoRepo.findById(id).orElseThrow(()-> new TodoNotFoundException("Todo with id " + id + "not found"));
+        return todoRepo.findById(id).orElseThrow(() -> new TodoNotFoundException("Todo with id " + id + " not found"));
     }
 
     public Todo createTodo(TodoDto todoDto) {
-        Todo todo= new Todo(
+        Todo todo = new Todo(
                 idService.generateId(),
                 todoDto.description(),
                 todoDto.status());
@@ -36,13 +36,13 @@ public class TodoService {
         return todo;
     }
 
-    public Todo updateTodo(Todo todo) throws TodoNotFoundException{
+    public Todo updateTodo(Todo todo) throws TodoNotFoundException {
 
-        if(todoRepo.existsById(todo.id())){
+        if (todoRepo.existsById(todo.id())) {
             todoRepo.save(todo);
             return todo;
         } else {
-            throw new TodoNotFoundException("Todo with id"+ todo.id()+ "not found");
+            throw new TodoNotFoundException("Todo with id" + todo.id() + " not found");
         }
     }
 
@@ -57,11 +57,11 @@ public class TodoService {
 //        }
 //    }
 
-    public void deleteTodo(String id) throws TodoNotFoundException{
-        if (todoRepo.existsById(id)){
+    public void deleteTodo(String id) throws TodoNotFoundException {
+        if (todoRepo.existsById(id)) {
             todoRepo.deleteById(id);
         } else {
-            throw new TodoNotFoundException("Todo with id " + id + "not found");
+            throw new TodoNotFoundException("Todo with id " + id + " not found");
         }
     }
 }

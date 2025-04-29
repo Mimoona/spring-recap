@@ -1,11 +1,9 @@
-package com.example.springrecap.ServiceTest;
+package com.example.springrecap.service;
 
 import com.example.springrecap.dto.TodoDto;
 import com.example.springrecap.exception.TodoNotFoundException;
 import com.example.springrecap.model.Todo;
 import com.example.springrecap.repository.TodoRepo;
-import com.example.springrecap.service.IdService;
-import com.example.springrecap.service.TodoService;
 import com.example.springrecap.todoEnum.Status;
 import org.junit.jupiter.api.Test;
 import org.mockito.Mockito;
